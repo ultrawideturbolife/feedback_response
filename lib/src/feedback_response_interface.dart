@@ -31,8 +31,8 @@ abstract class FeedbackResponseInterface<T extends Object?, N extends Enum,
   /// Indicates whether the response is a successful.
   bool get isSuccess;
 
-  /// Parses the response to any desired [E].
+  /// Parses the response to any desired type of [E].
   ///
   /// Although convenient - use with caution, this is blind casting!
-  E resultAsCast<E>() => result as E;
+  E resultAsType<E>() => result as E;
 }

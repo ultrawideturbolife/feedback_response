@@ -4,4 +4,5 @@ enum FeedbackType {
   dialog,
   snackbar,
   bottomSheet,
+  notification,
 }

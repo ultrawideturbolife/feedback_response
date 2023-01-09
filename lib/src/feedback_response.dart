@@ -28,7 +28,7 @@ class FeedbackResponse<T extends Object?>
     String? message,
     T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.success,
-    FeedbackType feedbackType = FeedbackType.snackbar,
+    FeedbackType feedbackType = FeedbackType.notification,
   }) =>
       FeedbackResponse(
         feedbackLevel: feedbackLevel,
@@ -59,7 +59,7 @@ class FeedbackResponse<T extends Object?>
     String? title,
     String? message,
     FeedbackLevel feedbackLevel = FeedbackLevel.info,
-    FeedbackType feedbackType = FeedbackType.dialog,
+    FeedbackType feedbackType = FeedbackType.notification,
   }) =>
       FeedbackResponse(
         feedbackLevel: feedbackLevel,
@@ -73,7 +73,7 @@ class FeedbackResponse<T extends Object?>
     String? title,
     String? message,
     FeedbackLevel feedbackLevel = FeedbackLevel.warning,
-    FeedbackType feedbackType = FeedbackType.dialog,
+    FeedbackType feedbackType = FeedbackType.notification,
   }) =>
       FeedbackResponse(
         feedbackLevel: feedbackLevel,
