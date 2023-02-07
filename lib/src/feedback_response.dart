@@ -121,17 +121,26 @@ class FeedbackResponse<T extends Object?>
   }
 
   /// Used to change responses if needed.
-  FeedbackResponse copyWith({
+  FeedbackResponse<E> copyWith<E>({
     FeedbackLevel? feedbackLevel,
     FeedbackType? feedbackType,
     String? title,
     String? message,
   }) =>
-      FeedbackResponse(
+      FeedbackResponse<E>(
         feedbackLevel: feedbackLevel ?? this.feedbackLevel,
         feedbackType: feedbackType ?? this.feedbackType,
         title: title ?? this.title,
         message: message ?? this.message,
-        result: result,
+        result: result as E,
+      );
+
+  /// Used to change responses if needed.
+  FeedbackResponse<E> withoutResult<E>() => FeedbackResponse(
+        feedbackLevel: feedbackLevel,
+        feedbackType: feedbackType,
+        title: title,
+        message: message,
+        result: null,
       );
 }

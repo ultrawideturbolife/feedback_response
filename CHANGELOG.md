@@ -1,3 +1,7 @@
+## 0.0.4+1
+
+* Added generic `copyWith<E>` argument and `withoutResult<E>` method.
+
 ## 0.0.4
 
 * Update default feedback types.
