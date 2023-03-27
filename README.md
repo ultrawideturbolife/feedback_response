@@ -1,7 +1,89 @@
-This package aims to provide a complete solution for communication between services inside your app. The idea behind this class is that every service (provided you use services - or you may call them repositories, controllers, robots or whatever) uses the same class as a form of communication. This solves a couple problems you did not knew you had!
+# FeedbackResponse
 
-![https://media.giphy.com/media/g0jlZ04SeV4AM1lvFw/giphy.gif](https://media.giphy.com/media/g0jlZ04SeV4AM1lvFw/giphy.gif)
+A Flutter package that streamlines creating and managing feedback responses in your application. It provides an easy way to create feedback responses with predefined levels (info, warning, success, error) and UI types (none, dialog, snackbar, bottomSheet, notification). The package simplifies communication between classes and handling errors deep within your class hierarchy.
 
-- Whenever a service in a chain of service methods results in an error type of `FeedbackResponse`, then all the other services/methods have to do is recognise the error `FeedbackResponse` and pass that response down the line to the calling class.
-- Here comes the cool part, the response contains a proper and specific feedback title and message for the user along with the type of feedback the user should get (if that’s what you want of course, they may also be empty). Example: fetching a user’s profile goes wrong. A `ProfileServiceRobot` creates a `FeedbackResponse` with a `title` and `message` explaining what happened in context of the profile along with the type of feedback it should show (`snackbar`, `dialog`, `bottomsheet`, `none`). Now all you have to is handle that accordingly (whether it be an error or success, both may contain interesting feedback) and your users are instantly provided with super responsive feedback everywhere they go!
-- Here comes the last cool part if you create/override your own `FeedbackResponseHandlerInterface` then all you have to do is pass any response to the handler and it will automatically handle the responses for you (coool, more time for you to write sick code).
+## Features
+
+- Predefined feedback levels and UI types
+- Extendable with custom feedback levels and UI types
+- Easy conversion to other data types
+- Immutable response objects
+
+The feedback_response package streamlines communication between all your classes. In case of issues deep within your class hierarchy, simply send a feedback response. As your classes communicate via these responses, they will identify the error and pass it up to the UI view, providing users with precise information about the issue. The UI intelligently decides the type of notification to display based on the `feedbackType` and adjusts the severity level according to the `feedbackLevel`.
+
+## Usage
+
+### Basic Usage
+
+Import the package:
+
+```dart
+import 'package:feedback_response/feedback_response.dart';
+```
+
+Create a feedback response:
+
+```dart
+FeedbackResponse response = FeedbackResponse.success(
+  title: 'Success',
+  message: 'Your request has been processed successfully.',
+  feedbackLevel: FeedbackLevel.success,
+  feedbackType: FeedbackType.dialog,
+);
+```
+
+```dart
+FeedbackResponse response = FeedbackResponse.success(
+  title: 'Success',
+  message: 'Your request failed.',
+  feedbackLevel: FeedbackLevel.error,
+  feedbackType: FeedbackType.snackbar,
+);
+```
+
+### Extended Usage
+
+You can create custom feedback levels and UI types by deriving from `FeedbackResponseInterface`:
+
+```dart
+class CustomFeedbackResponse<T extends Object?> extends FeedbackResponseInterface<T, CustomFeedbackLevel, CustomFeedbackType> {
+  // Your custom implementation here
+}
+```
+
+And then use your custom feedback response class:
+
+```dart
+CustomFeedbackResponse response = CustomFeedbackResponse.customLevel(
+  customFeedbackLevel: CustomFeedbackLevel.myLevel
+  customFeedbackType: CustomFeedbackType.myType
+  title: 'My Title',
+  message: 'My message',
+);
+```
+
+### Accessing Response Properties
+
+You can access the properties of your feedback responses, such as `title`, `message`, `result`, `feedbackLevel`, and `feedbackType`. You can also use `isSuccess` to check if the response is successful.
+
+```dart
+print(response.title);
+print(response.message);
+print(response.result);
+print(response.feedbackLevel);
+print(response.feedbackType);
+print(response.isSuccess);
+```
+
+### Casting Your Response
+
+You can easily cast your response's result to any other data type using the `resultAsType()` method:
+
+```dart
+MyClass myClass = response.resultAsType<MyClass>();
+```
+
+## License
+
+This package is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+```
