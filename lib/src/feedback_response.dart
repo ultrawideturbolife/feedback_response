@@ -58,6 +58,7 @@ class FeedbackResponse<T extends Object?>
   factory FeedbackResponse.info({
     String? title,
     String? message,
+    T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.info,
     FeedbackType feedbackType = FeedbackType.notification,
   }) =>
@@ -66,12 +67,14 @@ class FeedbackResponse<T extends Object?>
         title: title,
         message: message,
         feedbackType: feedbackType,
+        result: result,
       );
 
   /// Used to create a warning response with a dialog type of feedback.
   factory FeedbackResponse.warning({
     String? title,
     String? message,
+    T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.warning,
     FeedbackType feedbackType = FeedbackType.notification,
   }) =>
@@ -80,12 +83,14 @@ class FeedbackResponse<T extends Object?>
         title: title,
         message: message,
         feedbackType: feedbackType,
+        result: result,
       );
 
   /// Used to create an error response with a dialog type of feedback.
   factory FeedbackResponse.error({
     String? title,
     String? message,
+    T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.error,
     FeedbackType feedbackType = FeedbackType.dialog,
   }) =>
@@ -94,12 +99,14 @@ class FeedbackResponse<T extends Object?>
         title: title,
         message: message,
         feedbackType: feedbackType,
+        result: result,
       );
 
   /// Used to create an error response without any type of feedback.
   factory FeedbackResponse.errorNone({
     String? title,
     String? message,
+    T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.error,
     FeedbackType feedbackType = FeedbackType.none,
   }) =>
@@ -108,6 +115,7 @@ class FeedbackResponse<T extends Object?>
         title: title,
         message: message,
         feedbackType: feedbackType,
+        result: result,
       );
 
   @override
@@ -121,9 +129,10 @@ class FeedbackResponse<T extends Object?>
   }
 
   /// Used to change responses if needed.
-  FeedbackResponse<E> copyWith<E>({
+  FeedbackResponse<E> copyWith<E extends Object?>({
     FeedbackLevel? feedbackLevel,
     FeedbackType? feedbackType,
+    E? result,
     String? title,
     String? message,
   }) =>
@@ -132,15 +141,38 @@ class FeedbackResponse<T extends Object?>
         feedbackType: feedbackType ?? this.feedbackType,
         title: title ?? this.title,
         message: message ?? this.message,
-        result: result as E,
+        result: result ?? this.result as E,
       );
 
-  /// Used to change responses if needed.
-  FeedbackResponse<E> withoutResult<E>() => FeedbackResponse(
-        feedbackLevel: feedbackLevel,
-        feedbackType: feedbackType,
-        title: title,
-        message: message,
-        result: null,
-      );
+  /// Conditionally executes one of the two provided callbacks,
+  /// depending on whether `isSuccess` is true or false.
+  ///
+  /// If this [FeedbackResponse] is successful (`isSuccess` is true),
+  /// then it executes the [ifSuccess] callback with itself as an argument.
+  /// Otherwise, it executes the [ifError] callback with itself as an argument.
+  ///
+  /// Example:
+  /// ```
+  /// feedbackResponse.fold(
+  ///   ifSuccess: (response) {
+  ///     // Handle success.
+  ///   },
+  ///   ifError: (response) {
+  ///     // Handle error.
+  ///   },
+  /// );
+  /// ```
+  ///
+  /// - [ifSuccess] : A callback that is executed if this [FeedbackResponse] is successful.
+  /// - [ifError] : A callback that is executed if this [FeedbackResponse] is not successful.
+  void fold({
+    required void Function(FeedbackResponse<T> response) ifSuccess,
+    required void Function(FeedbackResponse<T> response) ifError,
+  }) {
+    if (isSuccess) {
+      ifSuccess(this);
+    } else {
+      ifError(this);
+    }
+  }
 }
