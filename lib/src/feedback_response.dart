@@ -119,9 +119,10 @@ class FeedbackResponse<T extends Object?>
       );
 
   @override
-  bool get isSuccess =>
-      feedbackLevel == FeedbackLevel.success ||
-      feedbackLevel == FeedbackLevel.info;
+  bool get isSuccess => feedbackLevel == FeedbackLevel.success;
+
+  @override
+  bool get hasError => feedbackLevel == FeedbackLevel.error;
 
   @override
   String toString() {
@@ -144,35 +145,19 @@ class FeedbackResponse<T extends Object?>
         result: result ?? this.result as E,
       );
 
-  /// Conditionally executes one of the two provided callbacks,
-  /// depending on whether `isSuccess` is true or false.
+  /// Returns a value depending on the success state of [FeedbackResponse] by
+  /// applying one of the provided functions [ifSuccess] or [orElse].
   ///
-  /// If this [FeedbackResponse] is successful (`isSuccess` is true),
-  /// then it executes the [ifSuccess] callback with itself as an argument.
-  /// Otherwise, it executes the [ifError] callback with itself as an argument.
-  ///
-  /// Example:
-  /// ```
-  /// feedbackResponse.fold(
-  ///   ifSuccess: (response) {
-  ///     // Handle success.
-  ///   },
-  ///   ifError: (response) {
-  ///     // Handle error.
-  ///   },
-  /// );
-  /// ```
-  ///
-  /// - [ifSuccess] : A callback that is executed if this [FeedbackResponse] is successful.
-  /// - [ifError] : A callback that is executed if this [FeedbackResponse] is not successful.
-  void fold({
-    required void Function(FeedbackResponse<T> response) ifSuccess,
-    required void Function(FeedbackResponse<T> response) ifError,
+  /// If the [FeedbackResponse] is successful, applies the [ifSuccess] function
+  /// with `this` as an argument; otherwise, the [orElse] function is applied.
+  T? fold({
+    required T? Function(FeedbackResponse<T> response) ifSuccess,
+    required T? Function(FeedbackResponse<T> response) orElse,
   }) {
     if (isSuccess) {
-      ifSuccess(this);
+      return ifSuccess(this);
     } else {
-      ifError(this);
+      return orElse(this);
     }
   }
 }

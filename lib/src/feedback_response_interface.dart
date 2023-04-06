@@ -31,6 +31,9 @@ abstract class FeedbackResponseInterface<T extends Object?, N extends Enum,
   /// Indicates whether the response is a successful.
   bool get isSuccess;
 
+  /// Indicates whether the response has an error.
+  bool get hasError;
+
   /// Parses the response to any desired type of [E].
   ///
   /// Although convenient - use with caution, this is blind casting!

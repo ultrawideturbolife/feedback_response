@@ -65,7 +65,7 @@ class HomeViewModel extends BaseViewModel {
         feedbackType:
             FeedbackType.values[Random().nextInt(FeedbackType.values.length)],
       ),
-      context: context,
+      context: context!,
     );
   }
 
