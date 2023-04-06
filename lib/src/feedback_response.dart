@@ -130,7 +130,7 @@ class FeedbackResponse<T extends Object?>
   }
 
   /// Used to change responses if needed.
-  FeedbackResponse<E> copyWith<E extends Object?>({
+  FeedbackResponse<E> copyWith<E>({
     FeedbackLevel? feedbackLevel,
     FeedbackType? feedbackType,
     E? result,
@@ -150,9 +150,9 @@ class FeedbackResponse<T extends Object?>
   ///
   /// If the [FeedbackResponse] is successful, applies the [ifSuccess] function
   /// with `this` as an argument; otherwise, the [orElse] function is applied.
-  T? fold({
-    required T? Function(FeedbackResponse<T> response) ifSuccess,
-    required T? Function(FeedbackResponse<T> response) orElse,
+  E fold<E>({
+    required E Function(FeedbackResponse<T> response) ifSuccess,
+    required E Function(FeedbackResponse<T> response) orElse,
   }) {
     if (isSuccess) {
       return ifSuccess(this);

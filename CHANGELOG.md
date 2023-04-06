@@ -1,3 +1,7 @@
+## 0.0.6
+
+* **⚠️ Breaking:** Fix fold bug.
+
 ## 0.0.5
 
 * **⚠️ Breaking:** Removed `FeedbackLevel.info` from the `FeedbackResponse.isSuccess` equation.
