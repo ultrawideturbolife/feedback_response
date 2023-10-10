@@ -1,3 +1,7 @@
+## 0.0.8
+
+* **⚠️ Breaking:** Changed default error `FeedbackType` to `notification`.
+
 ## 0.0.7
 
 * **✨ New:** Added copyWith conditional message and title based on success.

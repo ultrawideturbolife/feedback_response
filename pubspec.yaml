@@ -1,6 +1,6 @@
 name: feedback_response
 description: A simple package that aims to provide a complete solution for communication between services inside your app.
-version: 0.0.7
+version: 0.0.8
 homepage: https://github.com/codaveto/feedback_response
 
 environment:

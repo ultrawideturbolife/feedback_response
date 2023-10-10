@@ -92,7 +92,7 @@ class FeedbackResponse<T extends Object?>
     String? message,
     T? result,
     FeedbackLevel feedbackLevel = FeedbackLevel.error,
-    FeedbackType feedbackType = FeedbackType.dialog,
+    FeedbackType feedbackType = FeedbackType.notification,
   }) =>
       FeedbackResponse(
         feedbackLevel: feedbackLevel,
