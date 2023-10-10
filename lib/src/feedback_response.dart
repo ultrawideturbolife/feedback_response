@@ -136,12 +136,19 @@ class FeedbackResponse<T extends Object?>
     E? result,
     String? title,
     String? message,
+    String? ifSuccessTitle,
+    String? ifSuccessMessage,
+    String? ifErrorTitle,
+    String? ifErrorMessage,
   }) =>
       FeedbackResponse<E>(
         feedbackLevel: feedbackLevel ?? this.feedbackLevel,
         feedbackType: feedbackType ?? this.feedbackType,
-        title: title ?? this.title,
-        message: message ?? this.message,
+        title:
+            title ?? (isSuccess ? ifSuccessTitle : ifErrorTitle) ?? this.title,
+        message: message ??
+            (isSuccess ? ifSuccessMessage : ifErrorMessage) ??
+            this.message,
         result: result ?? this.result as E,
       );
 

@@ -1,3 +1,7 @@
+## 0.0.7
+
+* **✨ New:** Added copyWith conditional message and title based on success.
+
 ## 0.0.6
 
 * **⚠️ Breaking:** Fix fold bug.
